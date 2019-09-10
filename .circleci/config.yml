@@ -65,8 +65,12 @@ jobs:
             git config user.email "$publish_user_email"
             git config user.name "$publish_user_name"
             git add .
-            git commit -m "publish"
-            git push origin "$publish_branch"
+            if [[ $(git diff --name-only --cached) ]]; then
+              git commit -m "publish"
+              git push origin "$publish_branch"
+            else
+              echo "nothing new to deploy"
+            fi
 
 workflows:
   version: 2
