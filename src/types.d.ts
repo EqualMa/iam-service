@@ -3,7 +3,14 @@ import { Request } from "express";
 declare type FunctionHandler = (
   event: FunctionEvent,
   context: FunctionContext,
+  callback: FunctionCallback,
 ) => void;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare type FunctionCallback<E = any, P = any, R = void> = (
+  err: E,
+  payload: P,
+) => R;
 
 declare class FunctionEvent {
   public constructor(req: Request);

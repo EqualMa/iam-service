@@ -7,7 +7,7 @@
     "target": "es6",
     "module": "commonjs"
   },
-  "include": ["src/**/*.ts", "test/**/*.ts", "*.ts", "*.js"]
+  "include": ["src/**/*.ts", "test/**/*.ts", "dev/**/*.ts", "*.ts", "*.js"]
   // "include": ["**/*"],
   // "exclude": ["node_modules", "dist"]
 }
