@@ -7,7 +7,10 @@ import { eslint } from "rollup-plugin-eslint";
 import generatePackageJson from "rollup-plugin-generate-package-json";
 import copy from "rollup-plugin-copy";
 
-const entries = [...glob.sync("src/*.ts"), ...glob.sync("src/*/index.ts")];
+const entries = [
+  ...glob.sync("src/*.ts", { ignore: "**/*.d.ts" }),
+  ...glob.sync("src/*/index.ts"),
+];
 
 export default {
   // cache: false,

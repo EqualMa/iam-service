@@ -1,12 +1,7 @@
-import { Application } from "express";
-import { Routing } from "./routing";
+import { wrapAsyncHandler } from "./async-wrapper";
 
-export interface AppConfig {
-  app: Application;
-}
-
-export default async (config: AppConfig) => {
-  const routing = new Routing(config.app);
-  routing.configure();
-  routing.bind(routing.handle);
-};
+export default wrapAsyncHandler(async event => {
+  return {
+    payload: { time: new Date().toString(), ...event },
+  };
+});
