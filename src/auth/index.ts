@@ -1,8 +1,11 @@
 import { AsyncHandlerResult } from "../async-wrapper";
 import { FunctionEvent } from "../types";
+import { getGithubAccessToken } from "./access-token";
 
 export async function auth(
   event: FunctionEvent,
-): Promise<AsyncHandlerResult<{ a: string; path: string }>> {
-  return { payload: { a: "b", path: event.path } };
+): Promise<AsyncHandlerResult<object>> {
+  const { code, state } = event.query;
+  const res = await getGithubAccessToken(code, state);
+  return { payload: res };
 }
