@@ -1,16 +1,50 @@
-import { fly } from "../fly";
-import { GITHUB_APP_CLIENT_ID, GITHUB_APP_CLIENT_SECRET } from "../constant";
+import { GITHUB_APP_CLIENT_ID, GITHUB_APP_CLIENT_SECRET } from "../constants";
+import { createOAuthAppAuth } from "@octokit/auth-oauth-app";
+import { HandlerError } from "../async-wrapper";
 
-const url = "https://github.com/login/oauth/access_token";
-export async function getGithubAccessToken(code: string, state: string) {
-  const a = await fly.post(url, {
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    client_id: GITHUB_APP_CLIENT_ID,
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    client_secret: GITHUB_APP_CLIENT_SECRET,
-    code,
-    state,
-  });
+export interface GithubAccessTokenInputData {
+  code: string;
+  state: string;
+}
 
-  return a;
+export interface GithubAccessTokenPayload {
+  type: string;
+  tokenType: string;
+  token: string;
+  scopes: string[];
+}
+
+export async function getGithubAccessToken({
+  code,
+  state,
+}: GithubAccessTokenInputData): Promise<GithubAccessTokenPayload> {
+  try {
+    console.table({
+      clientId: GITHUB_APP_CLIENT_ID,
+      clientSecret: GITHUB_APP_CLIENT_SECRET,
+      code,
+      state,
+    });
+    const auth = createOAuthAppAuth({
+      clientId: GITHUB_APP_CLIENT_ID,
+      clientSecret: GITHUB_APP_CLIENT_SECRET,
+      code,
+      state,
+    });
+
+    const res = await auth({
+      type: "token",
+    });
+
+    return {
+      type: res.type,
+      tokenType: res.tokenType || "",
+      token: res.token || "",
+      scopes: res.scopes || [],
+    };
+  } catch (err) {
+    throw new HandlerError(err.message, {
+      payload: { message: err.message },
+    });
+  }
 }

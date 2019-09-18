@@ -6,9 +6,7 @@ import {
   FunctionCallback,
 } from "../src/types";
 import * as bodyParser from "body-parser";
-
-import * as dotenv from "dotenv";
-dotenv.config();
+import * as cors from "cors";
 
 const app = express();
 
@@ -17,6 +15,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.raw());
 app.use(bodyParser.text({ type: "text/*" }));
 app.disable("x-powered-by");
+
+app.use(cors());
 
 class FunctionEvent implements FunctionEventInterface {
   public readonly body: express.Request["body"];

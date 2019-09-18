@@ -48,12 +48,18 @@ function processContext(
   }
 }
 
-export function wrapAsyncHandler<P>(h: AsyncHandler<P>): FunctionHandler {
+export function wrapAsyncHandler<P>(
+  h: AsyncHandler<P>,
+  ...nexts: Array<
+    (previousValue: { res: AsyncHandlerResult<P> }) => AsyncHandlerResult<P>
+  >
+): FunctionHandler {
   return async (e, ctx) => {
     try {
       const res = await h(e, ctx);
 
-      processContext(ctx, res);
+      const final = nexts.reduce((r, next) => next({ res: r }), res);
+      processContext(ctx, final);
 
       ctx.succeed(res.payload);
     } catch (err) {

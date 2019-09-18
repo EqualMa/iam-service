@@ -12,13 +12,5 @@ module.exports = {
   plugins: [
     // TODO: need?
     "syntax-dynamic-import",
-    // "@babel/plugin-transform-modules-commonjs",
-    // "babel-plugin-chevrotain-serialize",
-    // [
-    //   "babel-plugin-chevrotain",
-    //   {
-    //     babel: true,
-    //   },
-    // ],
   ],
 };
