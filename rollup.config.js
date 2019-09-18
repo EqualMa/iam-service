@@ -42,7 +42,7 @@ export default {
     }),
 
     generatePackageJson({
-      outputFolder: "dist",
+      outputFolder: "dist/iam-service",
     }),
   ],
 };
