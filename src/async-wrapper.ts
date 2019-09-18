@@ -67,6 +67,8 @@ export function wrapAsyncHandler<P>(
         processContext(ctx, err.result);
 
         ctx.fail(err.result.payload);
+      } else {
+        console.error(err);
       }
     }
   };

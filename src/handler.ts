@@ -1,15 +1,21 @@
-import { wrapAsyncHandler } from "./async-wrapper";
+import { wrapAsyncHandler, HandlerError } from "./async-wrapper";
 import { auth } from "./auth";
 // import { CORS_ORIGIN } from "./constants";
 
 export default wrapAsyncHandler<unknown>(
   async event => {
-    if (event.path === "/auth") {
-      return await auth(event);
+    try {
+      if (event.path === "/auth") {
+        return await auth(event);
+      }
+      return {
+        payload: { time: new Date().toString() },
+      };
+    } catch (err) {
+      throw new HandlerError(err.message, {
+        payload: { message: err.message },
+      });
     }
-    return {
-      payload: { time: new Date().toString(), ...event },
-    };
   },
   ({ res }) => ({
     ...res,
