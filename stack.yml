@@ -7,3 +7,5 @@ functions:
     lang: node10-express
     handler: ./iam-service
     image: iam-service:latest
+    environment_file:
+      - ./iam-service/env.yml
