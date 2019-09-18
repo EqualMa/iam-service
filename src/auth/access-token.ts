@@ -19,12 +19,6 @@ export async function getGithubAccessToken({
   state,
 }: GithubAccessTokenInputData): Promise<GithubAccessTokenPayload> {
   try {
-    console.table({
-      clientId: GITHUB_APP_CLIENT_ID,
-      clientSecret: GITHUB_APP_CLIENT_SECRET,
-      code,
-      state,
-    });
     const auth = createOAuthAppAuth({
       clientId: GITHUB_APP_CLIENT_ID,
       clientSecret: GITHUB_APP_CLIENT_SECRET,
