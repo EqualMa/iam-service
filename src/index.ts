@@ -1,5 +1,3 @@
-import "@cloudflare/workers-types";
-
 import { router } from "./routes";
 
 async function handleRequest(request: Request): Promise<Response> {
