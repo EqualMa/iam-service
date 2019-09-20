@@ -1,25 +1,15 @@
-import * as glob from "glob";
 import { DEFAULT_EXTENSIONS } from "@babel/core";
 import typescript from "rollup-plugin-typescript2";
 import babel from "rollup-plugin-babel";
-import autoExternal from "rollup-plugin-auto-external";
 import { eslint } from "rollup-plugin-eslint";
-import generatePackageJson from "rollup-plugin-generate-package-json";
-import copy from "rollup-plugin-copy";
-
-const entries = [
-  ...glob.sync("src/*.ts", { ignore: "**/*.d.ts" }),
-  ...glob.sync("src/*/index.ts"),
-];
 
 export default {
   // cache: false,
-  input: entries,
+  input: "./src/index.ts",
   output: {
     format: "cjs",
-    dir: "dist/iam-service",
+    dir: "dist",
   },
-  external: ["body-parser"],
   plugins: [
     eslint(),
 
@@ -30,19 +20,11 @@ export default {
       clean: true,
     }),
 
-    autoExternal(),
+    // autoExternal(),
 
     babel({
       extensions: [...DEFAULT_EXTENSIONS, ".ts", ".tsx"],
       exclude: "node_modules/**",
-    }),
-
-    copy({
-      targets: [{ src: "stack.yml", dest: "dist" }],
-    }),
-
-    generatePackageJson({
-      outputFolder: "dist/iam-service",
     }),
   ],
 };

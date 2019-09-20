@@ -10,5 +10,3 @@ USER root
 #    && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 #
 # More information: https://www.gitpod.io/docs/42_config_docker/
-
-RUN curl -sSL https://cli.openfaas.com | sudo -E sh
