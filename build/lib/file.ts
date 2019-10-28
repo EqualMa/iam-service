@@ -11,6 +11,10 @@ export function readTextFile(file: string): string {
   return readFileSync(file, "utf8");
 }
 
+export function writeTextFile(file: string, content: string): void {
+  writeFileSync(file, content);
+}
+
 import { safeLoad, safeDump } from "js-yaml";
 
 export async function readYamlAsync<T>(file: string): Promise<T> {
@@ -25,5 +29,5 @@ export function readYaml<T>(file: string): T {
 
 export function writeYaml<T>(obj: T, file: string) {
   const s = safeDump(obj);
-  writeFileSync(file, s);
+  writeTextFile(file, s);
 }

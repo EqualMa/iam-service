@@ -1,6 +1,6 @@
 import { GITHUB_APP_CLIENT_ID, GITHUB_APP_CLIENT_SECRET } from "../constants";
 import { createOAuthAppAuth } from "@octokit/auth-oauth-app";
-import { HandlerError } from "../async-wrapper";
+import { HandlerError } from "../handler-error";
 
 export interface GithubAccessTokenInputData {
   code: string;

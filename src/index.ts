@@ -1,8 +1,31 @@
 import { router } from "./routes";
+import { HandlerError } from "./handler-error";
+
+const jsonHeaders = { "content-type": "application/json" };
 
 async function handleRequest(request: Request): Promise<Response> {
-  const resp = await router.route(request);
-  return resp;
+  try {
+    const resp = await router.route(request);
+    return resp;
+  } catch (e) {
+    if (e instanceof HandlerError) {
+      const { headers, payload, status = 500 } = e.result;
+      return new Response(
+        JSON.stringify({
+          message: e.message,
+          data: payload,
+        }),
+        { headers: { ...jsonHeaders, ...headers }, status },
+      );
+    } else {
+      return new Response(
+        JSON.stringify({
+          message: e.message,
+        }),
+        { status: 500 },
+      );
+    }
+  }
 }
 
 /**
