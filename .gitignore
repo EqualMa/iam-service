@@ -1,5 +1,8 @@
 dist
 
+# my custom ign(ore)
+*.ign
+
 # Logs
 logs
 *.log

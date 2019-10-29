@@ -1,1 +1,3 @@
-import "./scripts/generate-env";
+import "./scripts/auto-load-process-env";
+import "./scripts/define-global";
+import "./scripts/prepare-wrangler";

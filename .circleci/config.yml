@@ -7,7 +7,7 @@ version: 2.1
 executors:
   node-executor:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:12
     working_directory: ~/repo
 
 jobs:
@@ -52,25 +52,13 @@ jobs:
     executor: node-executor
 
     steps:
-      - checkout
+      # - checkout
       - attach_workspace:
           at: .
-
-      - run:
-          name: ""
-          command: |
-            git clone -n --depth 1 -b "$publish_branch" "$publish_repo_url" publish_repo
-            cp -R publish_repo/.git dist
-            cd dist
-            git config user.email "$publish_user_email"
-            git config user.name "$publish_user_name"
-            git add .
-            if [[ $(git diff --name-only --cached) ]]; then
-              git commit -m "publish"
-              git push origin "$publish_branch"
-            else
-              echo "nothing new to deploy"
-            fi
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+      - run: npx wrangler publish
 
 workflows:
   version: 2
