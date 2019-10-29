@@ -1,5 +1,8 @@
 dist
 
+# generated wrangler config file
+wrangler.toml
+
 # my custom ign(ore)
 *.ign
 

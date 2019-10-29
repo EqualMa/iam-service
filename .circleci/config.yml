@@ -47,6 +47,9 @@ jobs:
           root: ./
           paths:
             - dist
+            - yarn.lock
+            - package.json
+            - wrangler.toml
 
   deploy:
     executor: node-executor
