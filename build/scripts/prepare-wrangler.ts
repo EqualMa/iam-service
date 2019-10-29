@@ -1,6 +1,8 @@
-import { writeTextFile, readTextFile } from "../lib/file";
+import { writeTextFile, readTextFile, copyFile } from "../lib/file";
 
 import { join } from "path";
+
+const dest = (f: string) => join("./dist", f);
 
 const file = "./wrangler.toml";
 
@@ -11,4 +13,8 @@ const text = readTextFile(file);
 const newText =
   text + (text.endsWith("\n") ? "" : "\n") + `account_id = "${accountId}"\n`;
 
-writeTextFile(join("./dist", file), newText);
+writeTextFile(dest(file), newText);
+
+// yarn.lock for dep cache
+const lockFile = "./yarn.lock";
+copyFile(lockFile, dest(lockFile));

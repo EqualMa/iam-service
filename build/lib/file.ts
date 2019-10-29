@@ -1,4 +1,4 @@
-import { readFile as r, readFileSync, writeFileSync } from "fs";
+import { readFile as r, readFileSync, writeFileSync, copyFileSync } from "fs";
 import { promisify } from "util";
 
 export const readFileAsync = promisify(r);
@@ -30,4 +30,8 @@ export function readYaml<T>(file: string): T {
 export function writeYaml<T>(obj: T, file: string) {
   const s = safeDump(obj);
   writeTextFile(file, s);
+}
+
+export function copyFile(file: string, to: string) {
+  copyFileSync(file, to);
 }
